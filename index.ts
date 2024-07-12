@@ -41,7 +41,7 @@ app.post("/api/v1/product", async (req, res) => {
 
 app.get("/api/v1/product", async (req, res) => {
   try {
-    const result = await ProductModel.find();
+    const result = await ProductModel.find({ isDeleted: false });
     res.status(200).json({
       success: true,
       message: "Products Retrieved Successfully",
