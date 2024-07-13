@@ -7,9 +7,13 @@ import { OrderModel } from "./models/order.model";
 const app = express();
 const port = 5000;
 
+const corsOption = {
+  origin: ["https://forest-at-home-client.vercel.app"],
+};
+
 // parser
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOption));
 
 async function main() {
   try {
