@@ -2,6 +2,9 @@
 
 This repository contains the backend implementation for the ForestAtHome nursery plant website. The backend is built using Node.js, Express, TypeScript, Mongoose, and MongoDB.
 
+- [Live Site](https://forest-at-home-client.vercel.app)
+- [Project Preview Video](https://www.loom.com/share/06900dfcad9c41478dd3fe982cfb6485?sid=e645ccfa-774e-4ab9-8f27-5cd027566304)
+
 ## Features
 
 - **Product Management:** APIs for creating, reading, updating, and deleting products.
