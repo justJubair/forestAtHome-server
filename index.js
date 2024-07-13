@@ -21,7 +21,7 @@ const order_model_1 = require("./models/order.model");
 const app = (0, express_1.default)();
 const port = 5000;
 const corsOption = {
-    origin: ["https://forest-at-home-client.vercel.app"],
+    origin: ["https://forest-at-home-client.vercel.app", "http://localhost:5173"],
 };
 // parser
 app.use(express_1.default.json());

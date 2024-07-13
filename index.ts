@@ -8,7 +8,7 @@ const app = express();
 const port = 5000;
 
 const corsOption = {
-  origin: ["https://forest-at-home-client.vercel.app"],
+  origin: ["https://forest-at-home-client.vercel.app", "http://localhost:5173"],
 };
 
 // parser
