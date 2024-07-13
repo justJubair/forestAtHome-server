@@ -121,6 +121,7 @@ app.delete("/api/v1/product/:id", async (req: Request, res: Response) => {
 app.post("/api/v1/order", async (req: Request, res: Response) => {
   try {
     const order = req?.body;
+
     const result = await OrderModel.create(order);
     res.status(200).json({
       success: true,
