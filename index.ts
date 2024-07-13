@@ -41,14 +41,21 @@ app.post("/api/v1/product", async (req, res) => {
 
 app.get("/api/v1/product", async (req, res) => {
   try {
+    const page = parseInt(req?.query?.page as string);
+    const limit = 6;
+    const skip = page * limit;
+
     const filter = req?.query;
     const query = {
       title: { $regex: filter.search || "", $options: "i" },
     };
 
-    const result = await ProductModel.find(query).sort({
-      price: filter.sort === "asc" ? 1 : -1,
-    });
+    const result = await ProductModel.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({
+        price: filter.sort === "asc" ? 1 : -1,
+      });
     res.status(200).json({
       success: true,
       message: "Products Retrieved Successfully",
