@@ -1,8 +1,9 @@
 require("dotenv").config();
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import { ProductModel } from "./models/product.model";
+import { OrderModel } from "./models/order.model";
 const app = express();
 const port = 5000;
 
@@ -25,7 +26,7 @@ async function main() {
 main();
 
 // routes
-app.post("/api/v1/product", async (req, res) => {
+app.post("/api/v1/product", async (req: Request, res: Response) => {
   const product = req?.body;
   try {
     const result = await ProductModel.create(product);
@@ -39,12 +40,17 @@ app.post("/api/v1/product", async (req, res) => {
   }
 });
 
-app.get("/api/v1/product", async (req, res) => {
+app.get("/api/v1/productCount", async (req: Request, res: Response) => {
+  const count = await ProductModel.estimatedDocumentCount();
+  const result = { count };
+  res.send(result);
+});
+
+app.get("/api/v1/product", async (req: Request, res: Response) => {
   try {
     const page = parseInt(req?.query?.page as string);
-    const limit = 6;
+    const limit = parseInt(req?.query?.limit as string);
     const skip = page * limit;
-
     const filter = req?.query;
     const query = {
       title: { $regex: filter.search || "", $options: "i" },
@@ -66,7 +72,7 @@ app.get("/api/v1/product", async (req, res) => {
   }
 });
 
-app.get("/api/v1/product/:id", async (req, res) => {
+app.get("/api/v1/product/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req?.params;
     const result = await ProductModel.findById(id);
@@ -80,7 +86,7 @@ app.get("/api/v1/product/:id", async (req, res) => {
   }
 });
 
-app.put("/api/v1/product/:id", async (req, res) => {
+app.put("/api/v1/product/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req?.params;
     const doc = req?.body;
@@ -95,7 +101,7 @@ app.put("/api/v1/product/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/v1/product/:id", async (req, res) => {
+app.delete("/api/v1/product/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req?.params;
 
@@ -112,7 +118,21 @@ app.delete("/api/v1/product/:id", async (req, res) => {
   }
 });
 
+app.post("/api/v1/order", async (req: Request, res: Response) => {
+  try {
+    const order = req?.body;
+    const result = await OrderModel.create(order);
+    res.status(200).json({
+      success: true,
+      message: "Order Created Successfully",
+      data: result,
+    });
+  } catch (err) {
+    console.log("Error 😡", err);
+  }
+});
+
 // test route,
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("ForestAtHome!");
 });
